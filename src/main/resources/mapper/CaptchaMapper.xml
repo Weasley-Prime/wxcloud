@@ -12,9 +12,9 @@
     </resultMap>
 
     <select id="getCaptcha" resultMap="captchaMapper" parameterType="java.lang.String">
-        SELECT `id`, `count`, `createdAt`, `updatedAt`
-        FROM Counters
-        WHERE id = #{id}
+        SELECT `id`, `user_id`, `mess_type`, `captcha`, `createAt`, `updateAt`
+        FROM Captcha
+        WHERE user_id = #{user_id}
     </select>
 
 <!--    <delete id="save" parameterType="java.lang.Integer">-->

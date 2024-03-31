@@ -15,7 +15,7 @@ public class Captcha implements Serializable {
 
     private String captcha;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime createAt;
 
-    private LocalDateTime updatedAt;
+    private LocalDateTime updateAt;
 }

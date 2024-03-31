@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 @RestController
 public class CaptchaController {
@@ -26,19 +27,26 @@ public class CaptchaController {
 
     @GetMapping(value = "/captcha/get")
     public ApiResponse getCaptcha(@PathParam("user_id") String user_id){
-        String captcha = captchaService.getCaptcha(user_id);
-        if(captcha.isEmpty()){
+        Captcha captcha = captchaService.getCaptcha(user_id);
+        if(captcha==null){
+            return ApiResponse.error("没有验证码");
+        }
+        if(captcha.getCaptcha().isEmpty()){
             return ApiResponse.error("没有验证码");
         }
         return ApiResponse.ok(captcha);
     }
 
-    @PostMapping(value = "/captcha/post'")
+    @PostMapping(value = "/captcha/post")
     public ApiResponse saveCaptcha(@RequestBody() GetXmlMessageVo vo){
         Captcha captcha = new Captcha();
         Random random = new Random();
-        random.ints(6);
-        captcha.setCaptcha(random.ints(6).toString());
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            int digit = random.nextInt(10);
+            code.append(digit);
+        }
+        captcha.setCaptcha(code.toString());
         captcha.setUser_id(vo.getFromUserName());
         captcha.setMess_type(vo.getMsgType());
         captchaService.saveCaptcha(captcha);

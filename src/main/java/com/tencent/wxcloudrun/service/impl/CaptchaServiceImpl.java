@@ -16,7 +16,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     }
 
     @Override
-    public String getCaptcha(String user_id) {
+    public Captcha getCaptcha(String user_id) {
         return captchaMapper.getCaptcha(user_id);
     }
 
