@@ -3,12 +3,10 @@ package com.tencent.wxcloudrun.controller;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.model.Captcha;
 import com.tencent.wxcloudrun.service.CaptchaService;
-import com.tencent.wxcloudrun.tools.AesException;
 import com.tencent.wxcloudrun.vo.GetXmlMessageVo;
-import com.tencent.wxcloudrun.vo.SignatureVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tencent.wxcloudrun.tools.SHA1;
 
 import javax.websocket.server.PathParam;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -62,7 +58,7 @@ public class CaptchaController {
     }
 
     @GetMapping(value = "/checkSignature")
-    public String checkSignature(@PathParam("signature") String signature,@PathParam("timestamp") String timestamp,@PathParam("nonce") String nonce,@PathParam("echostr") String echostr) throws AesException {
+    public String checkSignature(@PathParam("signature") String signature,@PathParam("timestamp") String timestamp,@PathParam("nonce") String nonce,@PathParam("echostr") String echostr) {
         logger.info("/checkSignature get request");
         String sha1 = SHA1.getSHA1(token, timestamp, nonce, signature);
         logger.info("sha1 is" + sha1);
@@ -72,8 +68,8 @@ public class CaptchaController {
 //        return "不一样";
     }
 
-    @PostMapping(value = "/checkSignature")
-    public String checkSignaturePost(@RequestBody() GetXmlMessageVo vo) throws AesException {
+    @PostMapping(value = "/checkSignature",consumes = {MediaType.TEXT_XML_VALUE},produces = {MediaType.APPLICATION_JSON_VALUE})
+    public String checkSignaturePost(@RequestBody() GetXmlMessageVo vo) {
         logger.info("/checkSignaturePost get request");
         logger.info("================================================================");
 //        if(sha1 == echostr){
