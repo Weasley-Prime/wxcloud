@@ -62,10 +62,12 @@ public class CaptchaController {
     }
 
     @GetMapping(value = "/checkSignature")
-    public ApiResponse checkSignature(@PathParam("signature") String signature,@PathParam("timestamp") String timestamp,@PathParam("nonce") String nonce,@PathParam("echostr") String echostr) throws AesException {
+    public String checkSignature(@PathParam("signature") String signature,@PathParam("timestamp") String timestamp,@PathParam("nonce") String nonce,@PathParam("echostr") String echostr) throws AesException {
         String sha1 = SHA1.getSHA1(token, timestamp, nonce, signature);
-        System.out.println(sha1);
-        return ApiResponse.ok(sha1);
+        if(sha1 == echostr){
+            return echostr;
+        }
+        return "不一样";
     }
 
 }
