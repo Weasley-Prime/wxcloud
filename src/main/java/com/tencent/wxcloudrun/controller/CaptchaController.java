@@ -63,11 +63,21 @@ public class CaptchaController {
 
     @GetMapping(value = "/checkSignature")
     public String checkSignature(@PathParam("signature") String signature,@PathParam("timestamp") String timestamp,@PathParam("nonce") String nonce,@PathParam("echostr") String echostr) throws AesException {
-        logger.info("/api/count get request");
+        logger.info("/checkSignature get request");
         String sha1 = SHA1.getSHA1(token, timestamp, nonce, signature);
         logger.info("sha1 is" + sha1);
 //        if(sha1 == echostr){
         return echostr;
+//        }
+//        return "不一样";
+    }
+
+    @PostMapping(value = "/checkSignature")
+    public String checkSignaturePost(@RequestBody() GetXmlMessageVo vo) throws AesException {
+        logger.info("/checkSignaturePost get request");
+        logger.info("================================================================");
+//        if(sha1 == echostr){
+        return vo.toString();
 //        }
 //        return "不一样";
     }
