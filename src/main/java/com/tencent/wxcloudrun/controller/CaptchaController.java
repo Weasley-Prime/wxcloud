@@ -72,6 +72,7 @@ public class CaptchaController {
     public String checkSignaturePost(@RequestBody() GetXmlMessageVo vo) {
         logger.info("/checkSignaturePost get request");
         logger.info("================================================================");
+        logger.info(vo.toString());
 //        if(sha1 == echostr){
         return vo.toString();
 //        }
