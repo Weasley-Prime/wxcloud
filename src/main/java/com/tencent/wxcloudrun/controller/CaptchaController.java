@@ -78,14 +78,10 @@ public class CaptchaController {
     }
 
     @PostMapping(value = "/checkSignature",consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.TEXT_XML_VALUE})
-    public void checkSignaturePost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String checkSignaturePost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("/checkSignaturePost get request");
         logger.info("================================================================");
         request.setCharacterEncoding("UTF-8");
-
-        response.setCharacterEncoding("UTF-8");
-
-        PrintWriter out = response.getWriter();
 
         String str = null;
 
@@ -132,7 +128,6 @@ public class CaptchaController {
         } catch (DocumentException e){
             e.printStackTrace();
         }
-        out.print(str);
-        out.close();
+        return str;
     }
 }
