@@ -77,7 +77,7 @@ public class CaptchaController {
 //        return "不一样";
     }
 
-    @PostMapping(value = "/checkSignature",consumes = {MediaType.APPLICATION_XML_VALUE},produces = {MediaType.TEXT_XML_VALUE})
+    @PostMapping(value = "/checkSignature",consumes = {MediaType.APPLICATION_XML_VALUE, MediaType.TEXT_XML_VALUE})
     public void checkSignaturePost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.info("/checkSignaturePost get request");
         logger.info("================================================================");
